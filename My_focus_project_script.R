@@ -5,3 +5,5 @@ library(ggplot2)
 # load data
 seaspurge <- read_csv("data/ss_data_focus.csv")
 
+#view data
+seaspurge
