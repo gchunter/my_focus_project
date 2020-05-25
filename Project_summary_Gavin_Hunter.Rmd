@@ -1,0 +1,137 @@
+---
+title: Preliminary investigations into the population genetics of sea spurge (<em>Euphorbia paralias</em>) in Australia
+author:  Gavin Hunter
+affiliation: CSIRO Health and Biosecurity # Or group/team
+photo: resources/img/photo2.jpg
+
+output: DSreport::project_summary
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  results = 'asis',
+  echo = FALSE,
+  warning = FALSE,
+  message = FALSE,
+  fig.align = 'center'
+)
+
+#Load libraries
+library(tidyverse)
+library(gapminder)
+library(kableExtra)
+library(cowplot)
+library(gganimate)
+library(kableExtra)
+```
+
+```{r load_data}
+seaspurge <- read_csv("data/ss_data_focus2.csv")
+```
+
+
+# Introduction
+I am a research scientist in the Temperate Weeds research group of the Managing Invasive Species and Diseases (MISD) research programme of Health and Biosecurity. I am a plant pathoglogist and use classical and DNA-based molecular techniques to investigate the interaction of fungal plant pathogens and their plant hosts. My daily work pattern invovles experiments undertaken in the laboratory, glasshouse and quarantine facilities. I had no previous programming skills before Data School but was always very interested in learning programming to broaden my analytical skill set. 
+
+# My Project
+
+Sea spurge (<em>Euphorbia paralias</em>), a native of Mediterranean Europe, is an invasive plant in Australian dune and foredune ecosystems. The weed forms dense infestations that reduce the amentiy of public beaches, outcompetes native dune-associated plants and can also restrict the nesting habits of Australian birds. Colleagues and collaborators have collected samples of sea spurge from 48 populations across its distribution along the southern coastline of Australia. Our aim is to understand the genetic diveristy of sea spurge in Australia and to elucidate its invasion pathways across the southern States (WA, SA, VIC, TAS, NSW). To do this, approximately 751 Single Nucleotide Polymorphism (SNP) markers were identified for 364 samples across the 5 States. These data was used to determine various populaiton genetic indices including Observed Heterozygosity (Ho), Gene Diversity (Hs), Inbreeding coefficients (Fis), Alleleic richness (Ar) and the number of private alleles (Pa).
+
+## Preliminary results
+
+Preliminary analyses of the 751 SNP loci across the 364 sea spurge samples indicates that low to moderate heterozygosity and gene diversity is present in the 48 sampled populations across Australia (Figure 1). Interestingly, mean heterozygosity for populations from New South Wales was lower than populations from all other States and it appears that sea spurge populations in Western Australia and South Australia have slightly larger mean heterozygosity values (Figure 2). This is not entirely surprising as it has previously been hypothesized that WA and SA were the States where sea spurge was initially introduced in the early 20th century. Further evidence of this, particulalry for South Australia as a initial introduciton site, is the presence of a very large number of private alleles in sea spurge populations in South Australia (Figure 3). What makes this value more astonishing is the fact that only seven individuals from one populaiton in South Australia account for this exceedingly high number of private alleles.
+
+**Tables**
+```{r mytable, out.width='100%', echo = F}
+knitr::kable(head(seaspurge, n = 10), format = "html", caption = "Basic population diversity indices for sea spurge populations collected across five Australian States") %>% 
+  kable_styling("striped")
+```
+
+**Images from a file**
+
+![](resources/img/tidyverse.png){width=100px}
+
+**Plots from R**
+```{r combined plot, out.width='100%', fig.align='center', fig.height= 12, fig.width=15, fig.cap="Figs. 1-4: Plots of Observed heterozygosities, Gene diversity, private alleles and inbreeding coefficients for populations of sea spurge based on biallelic SNP data."}
+#Plot 1: observed heterozygosity against gene diversity
+plot1 <- seaspurge %>% 
+  ggplot(aes(x = Ho, y = Hs, colour = state, size = N)) +
+  geom_point() +
+  scale_color_brewer(palette = "Set1") +
+  labs(
+    title = "Figure 1: Gene diversity vs. Observed heterozygosity for each 
+    sampled population",
+    x = "Observed heterozygosity (Ho)",
+    y = "Gene diversity (Hs)")
+
+#plot the observed heterozygosity for each population
+plot2 <- seaspurge %>%
+  ggplot(aes(x = pop_no, y = Ho, fill = state)) +
+  geom_col() +
+  labs(
+    title = "Figure 2: Observed heterozygosity for each 
+    sampled population",
+    x = "Population number (pop_no)",
+    y = "Observed heterozygosity (Ho)"
+  )
+
+#plot the number of private alleles
+plot3 <- seaspurge %>% 
+  ggplot(aes(x = state, y = Pa)) +
+  geom_col() +
+  labs(
+    title = "Figure 3: Total number of private alleles across all 
+    sea spurge populations within a State",
+    x = "State",
+    y = "Total number of Private alleles (Pa)"
+  )
+
+#plot Fis against state
+plot4 <- seaspurge %>% 
+  ggplot(aes(x = pop_no, y = Fis, colour = state)) +
+  geom_line() +
+  geom_point(size = 2) +
+  labs(
+    title = "Figure 4: Inbreeding coefficient for each 
+    sampled population",
+    x = "Population number (pop_no)",
+    y = "Inbreeding coefficient (Fis)"
+  )
+#Combining plots into one
+plot_grid(plot1, plot2, plot3, plot4)
+
+```
+
+
+# My Digital Toolbox
+I have been using several R packages, together with tidyverse, to read-in, manipulate, analyse and graph genetic data in this project. Some of these R packages include;
+
+* dartR
+* adegenet
+* hierfstat
+* tidyverse
+
+I dont expect everything to be completed within R as certain analyses can only be undertaken in other standalone software packages. However, the fundamental skills learned through Data School have already helped me to increase the amount of analyses that I can undertake in R.
+
+## Favourite tool (optional)
+Since working in R I have particularly enjoyed two packages namely ggplot2 and adegenet. This is due to their versatility and the great number of plots that can be generated, in ggplot, and the useful, popgen specific, analyses that can be carried out in adegenet.
+
+![](https://raw.githubusercontent.com/tidyverse/ggplot2/master/man/figures/logo.png){.pull-right width=100px}
+
+# My time went ...
+The greatest amount of time that I spend on my project goes to cleaning, filtering and 
+re-formatting data so that they can be used for other R packages. As I am relatively 
+new to R programming, I have also found that I spend some time reading
+package manuals, working through their vignettes and examples to better understand the operation
+of the package.
+
+# Next steps
+My next steps are to continue learning the tidyverse and other R packages associated with
+population genetics and genomics so as to apply them even more to my typical analyses workflows.
+
+# My Data School Experience
+I had a great time in Data School! I found that the instructors were fantastic at teaching and clearly
+explaining the course content. They were also very encouraging and inclusive, making all the 
+participants feel comfortable and confident to participate, debate and learn. I am confident that
+the skills and techniques I have learnt in Data School will have a very positive impact on my
+research and open other data analyses pathways.
+
