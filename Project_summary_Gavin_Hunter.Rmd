@@ -1,5 +1,5 @@
 ---
-title: Preliminary investigations into the population genetics of sea spurge (<em>Euphorbia paralias</em>) in Australia
+title: Preliminary investigations into the population genetics of sea spurge (<em>Euphorbia paralias</em>) in Australia.
 author:  Gavin Hunter
 affiliation: CSIRO Health and Biosecurity # Or group/team
 photo: resources/img/photo2.jpg
