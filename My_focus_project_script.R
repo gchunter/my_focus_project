@@ -2,23 +2,16 @@
 library(tidyverse)
 library(ggplot2)
 library(cowplot)
+library(gganimate)
+library(kableExtra)
+
+
 
 # load data
-seaspurge <- read_csv("data/ss_data_focus.csv")
+seaspurge <- read_csv("data/ss_data_focus2.csv")
 
 #view data
 View(seaspurge)
-
-head(seaspurge, 5)
-
-# select heterozygosities and plot against each other
-seaspurge %>% 
-  select(pop_no, N, Ho, Hs) %>% 
-  ggplot(aes(x = Ho, y = Hs, size = N)) +
-  geom_point()
-
-ss_no_se <- select(seaspurge, -Ho_se, -Hs_se, -Ar_se, -Fis_se)
-View(ss_no_se)
 
 #Plot 1: observed heterozygosity against gene diversity
 plot1 <- seaspurge %>% 
@@ -58,9 +51,10 @@ plot3
 
 #plot Fis against state
 plot4 <- seaspurge %>% 
-  ggplot(aes(x = pop_no, y = Fis)) +
+  ggplot(aes(x = pop_no, y = Fis, colour = state)) +
   geom_line() +
-  geom_point() +
+  geom_point(size = 2) +
+  transition_reveal(pop_no) +
   labs(
     title = "Figure 4: Inbreeding coefficient for each sampled population",
     x = "Population number (pop_no)",
@@ -72,4 +66,3 @@ plot4
 #Combining plots into one
 plot_grid(plot1, plot2, plot3, plot4)
 
-?labs
