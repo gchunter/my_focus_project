@@ -43,12 +43,13 @@ Preliminary analyses of the 751 SNP loci across the 364 sea spurge samples indic
 
 ```{r mytable, out.width='100%', echo = F}
 knitr::kable(head(seaspurge, n = 10), format = "html", caption = "Basic population diversity indices for sea spurge populations collected across five Australian States") %>% 
-  kable_styling("striped")
+  kable_styling("striped") %>% 
+  footnote(number = c("N: Number of samples", "Ho: Observed Heterozygosity",
+                      "Hs: Observed Gene diversity", "Ar: Allelic Richness",
+                      "Fis: Inbreeding coefficient", "Pa: Number of Private alleles"))
 ```
 
-
-
-![](resources/img/tidyverse.png){width=100px}
+![](resources/img/Darby_River.JPG){width = 10px, height = 10px}
 
 
 ```{r, out.width='100%', fig.align='center', fig.height= 12, fig.width=15, fig.cap="Figs. 1-4: Plots of Observed heterozygosities, Gene diversity, private alleles and inbreeding coefficients for populations of sea spurge based on biallelic SNP data."}
@@ -59,7 +60,7 @@ plot1 <- seaspurge %>%
   geom_point() +
   scale_color_brewer(palette = "Set1") +
   labs(
-    title = "Figure 1: Hs v Ho",
+    title = "Figure 1: Gene Diversity vs. Heterozygosity",
     x = "Observed heterozygosity (Ho)",
     y = "Observed gene diversity (Hs)")
 
