@@ -40,36 +40,36 @@ Sea spurge (<em>Euphorbia paralias</em>), a native of Mediterranean Europe, is a
 
 Preliminary analyses of the 751 SNP loci across the 364 sea spurge samples indicates that low to moderate heterozygosity and gene diversity is present in the 48 sampled populations across Australia (Figure 1). Interestingly, mean heterozygosity for populations from New South Wales was lower than populations from all other States and it appears that sea spurge populations in Western Australia and South Australia have slightly larger mean heterozygosity values (Figure 2). This is not entirely surprising as it has previously been hypothesized that WA and SA were the States where sea spurge was initially introduced in the early 20th century. Further evidence of this, particulalry for South Australia as a initial introduciton site, is the presence of a very large number of private alleles in sea spurge populations in South Australia (Figure 3). What makes this value more astonishing is the fact that only seven individuals from one populaiton in South Australia account for this exceedingly high number of private alleles.
 
-**Tables**
+
 ```{r mytable, out.width='100%', echo = F}
 knitr::kable(head(seaspurge, n = 10), format = "html", caption = "Basic population diversity indices for sea spurge populations collected across five Australian States") %>% 
   kable_styling("striped")
 ```
 
-**Images from a file**
+
 
 ![](resources/img/tidyverse.png){width=100px}
 
-**Plots from R**
-```{r combined plot, out.width='100%', fig.align='center', fig.height= 12, fig.width=15, fig.cap="Figs. 1-4: Plots of Observed heterozygosities, Gene diversity, private alleles and inbreeding coefficients for populations of sea spurge based on biallelic SNP data."}
+
+```{r, out.width='100%', fig.align='center', fig.height= 12, fig.width=15, fig.cap="Figs. 1-4: Plots of Observed heterozygosities, Gene diversity, private alleles and inbreeding coefficients for populations of sea spurge based on biallelic SNP data."}
+
 #Plot 1: observed heterozygosity against gene diversity
 plot1 <- seaspurge %>% 
   ggplot(aes(x = Ho, y = Hs, colour = state, size = N)) +
   geom_point() +
   scale_color_brewer(palette = "Set1") +
   labs(
-    title = "Figure 1: Gene diversity vs. Observed heterozygosity for each 
-    sampled population",
+    title = "Figure 1: Hs v Ho",
     x = "Observed heterozygosity (Ho)",
-    y = "Gene diversity (Hs)")
+    y = "Observed gene diversity (Hs)")
 
 #plot the observed heterozygosity for each population
 plot2 <- seaspurge %>%
   ggplot(aes(x = pop_no, y = Ho, fill = state)) +
   geom_col() +
+  scale_fill_brewer(palette = "Dark2") +
   labs(
-    title = "Figure 2: Observed heterozygosity for each 
-    sampled population",
+    title = "Figure 2: Mean observed heterozygosity for each population",
     x = "Population number (pop_no)",
     y = "Observed heterozygosity (Ho)"
   )
@@ -79,10 +79,9 @@ plot3 <- seaspurge %>%
   ggplot(aes(x = state, y = Pa)) +
   geom_col() +
   labs(
-    title = "Figure 3: Total number of private alleles across all 
-    sea spurge populations within a State",
+    title = "Figure 3: Total number of private alleles across all populaitons within a State",
     x = "State",
-    y = "Total number of Private alleles (Pa)"
+    y = "Number of Private alleles (Pa)"
   )
 
 #plot Fis against state
@@ -90,12 +89,13 @@ plot4 <- seaspurge %>%
   ggplot(aes(x = pop_no, y = Fis, colour = state)) +
   geom_line() +
   geom_point(size = 2) +
+  scale_color_brewer(palette = "Dark2") +
   labs(
-    title = "Figure 4: Inbreeding coefficient for each 
-    sampled population",
+    title = "Figure 4: Inbreeding coefficient for each sampled population",
     x = "Population number (pop_no)",
     y = "Inbreeding coefficient (Fis)"
   )
+
 #Combining plots into one
 plot_grid(plot1, plot2, plot3, plot4)
 
@@ -133,5 +133,5 @@ I had a great time in Data School! I found that the instructors were fantastic a
 explaining the course content. They were also very encouraging and inclusive, making all the 
 participants feel comfortable and confident to participate, debate and learn. I am confident that
 the skills and techniques I have learnt in Data School will have a very positive impact on my
-research and open other data analyses pathways.
+research and open other data analysis pathways.
 
